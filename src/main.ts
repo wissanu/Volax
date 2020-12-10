@@ -8,5 +8,17 @@ if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+if (environment.production) {
+  enableProdMode();
+}
+
+setTimeout(() => {
+  const loadingElement = document.querySelector(".contex");
+
+  platformBrowserDynamic()
+    .bootstrapModule(AppModule)
+    .then(() => loadingElement.classList.add("loaded"))
+    .then(() => setTimeout(() => loadingElement.remove(), 1000))
+    .catch(err => console.error(err));
+});
+//platformBrowserDynamic().bootstrapModule(AppModule).catch(err => console.error(err));
